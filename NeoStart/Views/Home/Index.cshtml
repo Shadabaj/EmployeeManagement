@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@{
+    ViewData["Title"] = "Number to Words";
+}
+
+<h1>Convert Number to Words</h1>
+
+<form method="post" asp-action="ConvertNumberToWords">
+    <div class="form-group">
+        <label for="number">Enter Number</label>
+        <input type="number" class="form-control" id="number" name="number" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Convert</button>
+</form>
+
+@if (ViewBag.Result != null)
+{
+    <h3>Result: @ViewBag.Result</h3>
+}
+
+
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

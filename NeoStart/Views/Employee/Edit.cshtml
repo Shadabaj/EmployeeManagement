@@ -1,0 +1,214 @@
+﻿@model NeoStart.Models.EditEmployee
+
+@{
+    ViewData["Title"] = "Edit";
+    string ErrorMessage = TempData["ErrorMessage"] as string;
+}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<h1>Edit Employee</h1>
+<hr />
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <form asp-action="Edit" enctype="multipart/form-data" id="EditFormId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Hidden Field for RowId -->
+            <input hidden asp-for="RowId" class="form-control" />
+
+            <!-- Employee Code -->
+            <div class="form-group">
+                <label asp-for="EmployeeCode" class="control-label"></label>
+                <input asp-for="EmployeeCode" class="form-control" />
+                <span asp-validation-for="EmployeeCode" class="text-danger"></span>
+            </div>
+
+            <!-- First Name -->
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group">
+                <label asp-for="EmailAddress" class="control-label"></label>
+                <input asp-for="EmailAddress" class="form-control" />
+                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            </div>
+
+            <!-- Mobile Number -->
+            <div class="form-group">
+                <label asp-for="MobileNumber" class="control-label"></label>
+                <input asp-for="MobileNumber" class="form-control" />
+                <span asp-validation-for="MobileNumber" class="text-danger"></span>
+            </div>
+
+            <!-- PAN Number -->
+            <div class="form-group">
+                <label asp-for="PanNumber" class="control-label"></label>
+                <input asp-for="PanNumber" class="form-control" />
+                <span asp-validation-for="PanNumber" class="text-danger"></span>
+            </div>
+
+            <!-- Passport Number -->
+            <div class="form-group">
+                <label asp-for="PassportNumber" class="control-label"></label>
+                <input asp-for="PassportNumber" class="form-control" />
+                <span asp-validation-for="PassportNumber" class="text-danger"></span>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input type="date" asp-for="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <input type="radio" id="male" name="Gender" value="Male" @(Model.Gender == Gender.Male ? "checked" : "") />
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="Gender" value="Female" @(Model.Gender == Gender.Female ? "checked" : "") />
+                <label for="female">Female</label>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+            <!-- Country -->
+            <div class="form-group">
+                <label asp-for="CountryId" class="control-label">Country</label>
+                <select class="form-control" id="countryedit" name="CountryId" asp-items="ViewBag.Countries">
+                    <option value="">---SELECT---</option>
+                </select>
+                <span asp-validation-for="CountryId" class="text-danger"></span>
+            </div>
+
+            <!-- State -->
+            <div class="form-group">
+                <label asp-for="StateId" class="control-label">State</label>
+                <select class="form-control" id="stateedit" name="StateId" asp-items="ViewBag.States">
+                    <option value="">---SELECT---</option>
+                </select>
+                <span asp-validation-for="StateId" class="text-danger"></span>
+            </div>
+
+            <!-- City -->
+            <div class="form-group">
+                <label asp-for="CityId" class="control-label">City</label>
+                <select class="form-control" id="cityedit" name="CityId" asp-items="ViewBag.Cities">
+                    <option value="">---SELECT---</option>
+                </select>
+                <span asp-validation-for="CityId" class="text-danger"></span>
+            </div>
+
+            <!-- Date of Joining -->
+            <div class="form-group">
+                <label asp-for="DateOfJoinee" class="control-label"></label>
+                <input type="date" asp-for="DateOfJoinee" class="form-control" />
+                <span asp-validation-for="DateOfJoinee" class="text-danger"></span>
+            </div>
+
+            <!-- Upload Image -->
+            <div class="form-group">
+                <label asp-for="UploadImage" class="control-label"></label>
+                <input type="file" asp-for="UploadImage" class="form-control">
+                <span asp-validation-for="UploadImage" class="text-danger"></span>
+                <br />
+                @if (Model != null && !string.IsNullOrEmpty(Model.ProfileImage))
+                {
+                    <input type="hidden" asp-for="ProfileImage" class="form-control" />
+                    <img src="@Model.ProfileImage" class="w-25" />
+                }
+                @if (!string.IsNullOrEmpty(ErrorMessage))
+                {
+                    <div class="alert alert-danger">
+                        @ErrorMessage
+                    </div>
+                }
+            </div>
+
+            <!-- Active Status -->
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+
+            <div class="form-group">
+                @* <input type="submit" value="Save" class="btn btn-primary" />&nbsp; *@
+                @* <input type="submit" value="Save" onclick="showConfirmation();" id="myForm" class="btn btn-primary" /> *@
+
+                <button type="button" onclick="showConfirmation()" class="btn btn-primary">Edit</button>
+
+                <input type="button" value="Cancel" class="btn btn-secondary" onclick="window.location.href='@Url.Action("Index", "Employee")'" />
+            </div>
+
+           
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+       
+    }
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // $('#stateedit').prop('disabled', true);
+        // $('#cityedit').prop('disabled', true);
+
+      
+        $('#countryedit').change(function () {
+            var countryId = $(this).val();
+            if (countryId) {
+                $.get('/Employee/GetStates', { countryId: countryId }, function (data) {
+                    var stateSelect = $('#stateedit');
+                    stateSelect.empty().append('<option value="">---SELECT---</option>');
+                    $.each(data, function (i, state) {
+                        stateSelect.append('<option value="' + state.rowId + '">' + state.stateName + '</option>');
+                    });
+                    stateSelect.prop('disabled', false); 
+                    $('#cityedit').prop('disabled', true); 
+                    $('#cityedit').empty().append('<option value="">---SELECT---</option>');
+                });
+            } else {
+                $('#stateedit').prop('disabled', true);
+                $('#cityedit').prop('disabled', true);
+                $('#stateedit').empty().append('<option value="">---SELECT---</option>');
+                $('#cityedit').empty().append('<option value="">---SELECT---</option>');
+            }
+        });
+
+      
+        $('#stateedit').change(function () {
+            var stateId = $(this).val();
+            if (stateId) {
+                $.get('/Employee/GetCities', { stateId: stateId }, function (data) {
+                    var citySelect = $('#cityedit');
+                    citySelect.empty().append('<option value="">---SELECT---</option>');
+                    $.each(data, function (i, city) {
+                        citySelect.append('<option value="' + city.rowId + '">' + city.cityName + '</option>');
+                    });
+                    citySelect.prop('disabled', false); 
+                });
+            } else {
+                $('#cityedit').prop('disabled', true);
+                $('#cityedit').empty().append('<option value="">---SELECT---</option>');
+            }
+        });
+    });
+</script>
+}
