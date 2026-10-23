@@ -1,0 +1,34 @@
+﻿@model UI.Models.Practice
+
+<h4>Practice</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Calculate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Numb1" class="control-label"></label>
+                <input asp-for="Numb1" class="form-control" />
+                <span asp-validation-for="Numb1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Numb2" class="control-label"></label>
+                <input asp-for="Numb2" class="form-control" />
+                <span asp-validation-for="Numb2" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Numb2" class="control-label">@ViewBag.Answer</label>           
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

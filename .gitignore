@@ -1,0 +1,42 @@
+# .NET build output
+**/bin/
+**/obj/
+**/out/
+artifacts/
+TestResults/
+coverage/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.cache
+*.pdb
+*.opendb
+*.VC.db
+
+# Local configurations and secrets
+.env
+.env.*
+!.env.example
+**/appsettings.Local.json
+**/appsettings.*.Local.json
+**/secrets*.json
+*.publishsettings
+*.pubxml
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.old
+
+# IDE / OS state
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini

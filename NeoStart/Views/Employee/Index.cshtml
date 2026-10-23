@@ -1,0 +1,160 @@
+﻿@model IEnumerable<Models.EmployeeDetailsViewModel>
+
+@{
+    ViewData["Title"] = "Employee Index";
+}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+    a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+
+<div class="container mt-4">
+   
+    <div class="row justify-content-between">
+        <div class="col-md-8">
+            <form asp-action="Index" class="d-flex w-100">
+                <input class="form-control me-2" type="search" name="SearchText" value="@ViewBag.SearchText" placeholder="Search" aria-label="Search" />
+                <input class="btn btn-outline-success" type="submit" value="Search" />
+            </form>
+        </div>
+
+        <div class="col-md-4 text-end">
+            <a asp-action="Create" class="btn btn-outline-primary">Create New Record</a>
+        </div>
+    </div>
+
+
+    @* <div class="text-center mb-3"> *@
+    @*     <h5>Employee Records</h5> *@
+    @*     <p>Total Number of Employees: @ViewBag.EmployeeCount</p> *@
+    @* </div> *@
+
+    <!-- Employee Table -->
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        <a asp-action="Index" asp-route-sortCol="EmployeeCode" asp-route-sortDir="@((string)ViewData["sortDir"] == "asc" ? "desc" : "asc")">
+                            Employee Code
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortCol="FirstName" asp-route-sortDir="@((string)ViewData["sortDir"] == "asc" ? "desc" : "asc")">
+                            First Name
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortCol="LastName" asp-route-sortDir="@((string)ViewData["sortDir"] == "asc" ? "desc" : "asc")">
+                            Last Name
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortCol="Country" asp-route-sortDir="@((string)ViewData["sortDir"] == "asc" ? "desc" : "asc")">
+                            Country
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortCol="EmailAddress" asp-route-sortDir="@((string)ViewData["sortDir"] == "asc" ? "desc" : "asc")">
+                            EmailAddress
+                        </a>
+                       
+
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortCol="MobileNumber" asp-route-sortDir="@((string)ViewData["sortDir"] == "asc" ? "desc" : "asc")">
+                            Mobile Number
+                        </a>
+                    </th>
+                    <th>
+                        Profile Image
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortCol="MobileNumber" asp-route-sortDir="@((string)ViewData["sortDir"] == "asc" ? "desc" : "asc")">
+                            Mobile Number
+                        </a>
+                        
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.EmployeeCode)</td>
+                        <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CountryName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.EmailAddress)</td>
+                        <td>@Html.DisplayFor(modelItem => item.MobileNumber)</td>
+                 
+                        <td class="w-25">
+                            @if (!string.IsNullOrEmpty(item.ProfileImage))
+                            {
+                                <img src="@item.ProfileImage" class="w-25" alt="Profile Image" />
+                            }
+                            else
+                            {
+                                <span>No Image</span>
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                        <td>
+                           
+                            <a href="@Url.Action("Edit", new { id = item.RowId })" class="btn btn-sm btn-warning" title="Edit">Edit</a>&nbsp;
+
+                            @* <a href="@Url.Action("Delete", new {  id=item.RowId,Url=item.ProfileImage  })" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this record?')">Delete</a> *@
+                            <a href="@Url.Action("Details", new { id = item.RowId })" class="btn btn-sm btn-info" title="View Details">Details</a>&nbsp;
+                          
+                            <a href="javascript:void(0);" class="btn btn-sm btn-danger" title="Delete" 
+                               onclick="deleteConfirm('@Url.Action("Delete", new { id=item.RowId, Url=item.ProfileImage })')">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        
+        @if (ViewBag.Pager != null)
+        {
+            <partial name="_pager" model="@ViewBag.Pager" />
+        }
+    }
+    else
+    {
+        <div class="container pt-5 pb-5 text-center">
+            <h4>No records found!</h4>
+        </div>
+    }
+</div>
+
+
+
+
+
+<script>
+    function deleteConfirm(url) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will not be able to undo this action!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = url;
+        }
+      });
+    }
+</script>
