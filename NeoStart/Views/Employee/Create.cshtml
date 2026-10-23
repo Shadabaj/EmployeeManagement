@@ -1,0 +1,224 @@
+﻿@model NeoStart.Models.EmployeeModel
+
+@{
+    ViewData["Title"] = "Create Employee";
+
+    var errorMessage = TempData["ErrorMessage"] as string;
+    var genderMessage = TempData["Gender"] as string;
+}
+
+<h1 class="text-center" style="color: rgb(2,0,36);">Create Employee</h1>
+
+<hr />
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <input hidden asp-for="RowId" class="form-control" />
+
+
+                <div class="form-group">
+                    <label asp-for="EmployeeCode" class="control-label">Employee Code</label>
+                    <input asp-for="EmployeeCode" class="form-control" />
+                    <span asp-validation-for="EmployeeCode" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label">First Name</label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label">Last Name</label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="DateOfBirth" class="control-label">Date of Birth</label>
+                    <input type="date" asp-for="DateOfBirth" class="form-control" />
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="DateOfJoinee" class="control-label">Date of Joining</label>
+                    <input type="date" asp-for="DateOfJoinee" class="form-control" />
+                    <span asp-validation-for="DateOfJoinee" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="CountryId" class="control-label">Country</label>
+                    <select class="form-control" id="Country" name="CountryId">
+                        <option disabled selected value="">---SELECT---</option>
+                    </select>
+                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="StateId" class="control-label">State</label>
+                    <select class="form-control" id="State" name="StateId" disabled>
+                        <option disabled selected value="">---SELECT---</option>
+                    </select>
+                    <span asp-validation-for="StateId" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="CityId" class="control-label">City</label>
+                    <select class="form-control" id="City" name="CityId" disabled>
+                        <option disabled selected value="">---SELECT---</option>
+                    </select>
+                    <span asp-validation-for="CityId" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="EmailAddress" class="control-label">Email Address</label>
+                    <input asp-for="EmailAddress" class="form-control" />
+                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="MobileNumber" class="control-label">Mobile Number</label>
+                    <input asp-for="MobileNumber" class="form-control" />
+                    <span asp-validation-for="MobileNumber" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="PanNumber" class="control-label">PAN Number</label>
+                    <input asp-for="PanNumber" class="form-control" />
+                    <span asp-validation-for="PanNumber" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="PassportNumber" class="control-label">Passport Number</label>
+                    <input asp-for="PassportNumber" class="form-control" />
+                    <span asp-validation-for="PassportNumber" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="UploadImage" class="control-label">Upload Image</label>
+                    <input type="file" asp-for="UploadImage" class="form-control" />
+                    <span asp-validation-for="UploadImage" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="Gender" class="control-label">Gender</label>
+
+                    <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" id="male" name="Gender" value="Male" />
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" id="female" name="Gender" value="Female" />
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+
+
+
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group form-check">
+                    <input class="form-check-input" type="checkbox" asp-for="IsActive" id="isActive" />
+                    <label class="form-check-label" for="isActive">I accept the terms and conditions</label>
+
+                    @if(!string.IsNullOrEmpty(genderMessage))
+                    {
+                        <div class="text-danger">
+                            @genderMessage
+                        </div>
+                    }
+                    <span asp-validation-for="IsActive" class="text-danger"></span>
+                </div>
+               <br />
+                
+                <div class="form-group text-center">
+                    <input type="submit" value="Create"  class="btn btn-primary" />
+                    <input type="button" value="Cancel" class="btn btn-secondary" onclick="window.location.href='@Url.Action("Index", "Employee")'" />
+                </div>
+
+            
+                @if (!string.IsNullOrEmpty(ViewBag.Error))
+                {
+                    <div class="alert alert-danger">
+                        @ViewBag.Error
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="alert alert-danger">
+                        @errorMessage
+                    </div>
+                }
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+       
+    }
+
+    <script>
+
+        $(document).ready(function () {
+
+            GetCountry();
+
+
+        $('#State').attr('disabled', true);
+        $('#City').attr('disabled', true);
+
+
+        $('#Country').change(function () 
+        {
+                var countryId = $(this).val();
+
+        $('#State').attr('disabled', false);
+        $('#State').empty().append('<option>---SELECT STATE---</option>');
+        GetState(countryId);
+
+            });
+
+
+        $('#State').change(function () {
+                var stateId = $(this).val();
+        console.log(stateId);
+        $('#City').attr('disabled', false);
+        $('#City').empty().append('<option>---SELECT CITY---</option>');
+        GetCity(stateId);
+
+            });
+        });
+
+       
+    </script>
+}
+
+

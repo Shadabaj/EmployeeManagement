@@ -1,0 +1,33 @@
+﻿[HttpPost]
+public JsonResult AddCountry(Country country)
+{
+    // You can handle the received country data here
+    _db.Countries.Add(country);
+    _db.SaveChanges();
+
+    return new JsonResult(new { success = true, message = "Country added successfully!" });
+}
+
+
+
+function AddCountry() {
+    var countryData = {
+        countryName: $('#countryName').val(),  // Assuming you have an input for country name
+        countryCode: $('#countryCode').val()   // Assuming you have an input for country code
+    };
+
+    $.ajax({
+        url: "/Employee/AddCountry",   // Endpoint for POST request
+        type: "POST",                 // Use POST method
+        contentType: "application/json; charset=utf-8",  // Send JSON data
+        data: JSON.stringify(countryData),  // Send data as a JSON string
+        success: function(result) {
+            // Handle successful response here
+            alert(result.message);  // For example, show a success message
+        },
+        error: function(xhr, status, error) {
+            // Handle error here
+            alert("An error occurred: " + error);
+        }
+    });
+}
